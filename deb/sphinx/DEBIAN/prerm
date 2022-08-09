@@ -5,9 +5,9 @@ set -u
 
 case "$1" in
   remove|remove-in-favour|deconfigure|deconfigure-in-favour)
-    if [ -f /etc/init/sphinx.conf ]; then
+    if [ -f  /etc/systemd/system/sphinx.service ]; then
       echo "Stopping. Bringing down the Sphinx..."
-      service sphinx stop || exit $?
+      systemctl stop sphinx.service || exit $?
       echo "Stopped. Sphinx no longer offering riddles."
     fi
     ;;
