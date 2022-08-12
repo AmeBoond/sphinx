@@ -1,0 +1,22 @@
+[Unit]
+Description=Sphinx API Rate Limiting Service
+ConditionPathExists=/usr/local/bin/sphinxd
+After=network.target
+
+[Service]
+Type=simple
+User=sphinx
+Group=sphinx
+LimitNOFILE=65536
+
+Restart=on-failure
+RestartSec=10
+
+WorkingDirectory=/etc/sphinx/
+ExecStart=/bin/bash -c "/usr/local/bin/sphinxd --config=/etc/sphinx/sphinx.yaml"
+
+StandardOutput=append:/var/log/sphinx/sphinx.log
+StandardError=append:/var/log/sphinx/sphinx.log
+
+[Install]
+WantedBy=multi-user.target

@@ -11,12 +11,28 @@ case "$1" in
     ;;
 esac
 
+# create sphinx group
+if ! getent group sphinx >/dev/null; then
+        addgroup --system sphinx
+fi
+
+# create sphinx user
+if ! getent passwd sphinx >/dev/null; then
+        adduser --system --ingroup sphinx \
+                --no-create-home --gecos "sphinx API Rate Limiting Service" \
+                --disabled-login sphinx
+fi
+
+chown -R sphinx:adm /var/log/sphinx
+chgrp sphinx /etc/sphinx
+chmod g+s /etc/sphinx
+
 echo "Bringing up the Sphinx..."
-if [ -f /etc/init/sphinx.conf ]; then
+if [ -f /etc/systemd/system/sphinx.service ]; then
     if pidof /usr/local/bin/sphinxd >/dev/null; then
-        service sphinx stop || exit $?
+        systemctl stop sphinx.service || exit $?
     fi
-    service sphinx start && echo "Started. Sphinx now on guard."
+    systemctl start sphinx.service && echo "Started. Sphinx now on guard."
 fi
 
 #DEBHELPER#

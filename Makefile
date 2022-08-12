@@ -46,6 +46,7 @@ deb: build-release
 	mkdir -p deb/sphinx/var/lib/sphinx
 	mkdir -p deb/sphinx/var/cache/sphinx
 	cp bin/sphinxd deb/sphinx/usr/local/bin
+	cp kvconfig.yml deb/sphinx/etc/sphinx
 	-dpkg-deb --build deb/sphinx
 
 run: build
