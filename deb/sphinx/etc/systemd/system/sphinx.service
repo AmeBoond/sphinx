@@ -13,7 +13,7 @@ Restart=on-failure
 RestartSec=10
 
 WorkingDirectory=/etc/sphinx/
-ExecStart=/bin/bash -c "/usr/local/bin/sphinxd --config=/etc/sphinx/sphinx.yaml 2>&1 | /usr/bin/ts '%%Y-%%m-%%dT%%T+02:00'"
+ExecStart=/bin/bash -c "/usr/local/bin/sphinxd --config=/etc/sphinx/sphinx.yaml"
 
 StandardOutput=append:/var/log/sphinx/sphinx.log
 StandardError=append:/var/log/sphinx/sphinx.log
